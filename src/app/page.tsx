@@ -1,9 +1,10 @@
-import Image from "next/image";
+import Hero from "@/components/homepage/Hero";
+import TheLibrary from "@/components/homepage/Library";
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4">
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+    <div className="px-6">
+      <Hero />
     </div>
   );
 }

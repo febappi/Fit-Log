@@ -26,7 +26,7 @@ const Navbar = () => {
                             width={28}
                             height={28}
                         />
-                        <span className="font-osw font-bold text-lg tracking-wide">
+                        <span className="font-display font-bold text-lg tracking-wide leading-[0.5]">
                             FITLOG
                         </span>
                     </Link>
