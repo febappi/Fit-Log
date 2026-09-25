@@ -1,10 +1,10 @@
+import Link from 'next/link';
 import React from 'react';
+import Home from '../page';
 
 const WorkoutPage = () => {
     return (
-        <div className="container mx-auto px-4">
-            <h1 className="text-3xl font-bold underline">Workout Page</h1>
-        </div>
+        <Home />
     );
 };
 
