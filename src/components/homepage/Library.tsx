@@ -1,9 +1,9 @@
 import { getData } from "@/lib/data";
 import { TWorkout } from "@/types/workout.type";
+import WorkoutCard from "../shared/WorkoutCard";
 
 const TheLibrary = async () => {
     const data = await getData();
-    console.log(data);
     return (
         <div className="mt-15 mb-10">
             <div className="mb-10">
@@ -17,7 +17,7 @@ const TheLibrary = async () => {
             <div className="mx-auto grid max-w-7xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {data.map((workout: TWorkout) => (
                     <div key={workout.id} className="mb-4">
-                        <h3>{workout.name}</h3>
+                        <WorkoutCard workout={workout} />
                     </div>
                 ))}
             </div>
