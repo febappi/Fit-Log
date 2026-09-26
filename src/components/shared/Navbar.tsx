@@ -5,7 +5,7 @@ import React from 'react';
 
 const Navbar = () => {
     return (
-        <div className="px-4 px-10 border-b-2 border-white/10 mb-4">
+        <div className="px-10 border-b-2 border-white/10 mb-4">
             <div className="navbar bg-base-100 shadow-sm">
                 <div className="navbar-start">
                     <div className="dropdown">

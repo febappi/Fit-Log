@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { TWorkout } from "@/types/workout.type";
 import { notFound } from "next/navigation";
+import WorkoutActions from "./WorkoutActions";
 
 type TWorkoutPageProps = {
     params: Promise<{
@@ -107,44 +108,7 @@ const WorkoutPageById = async ({ params }: TWorkoutPageProps) => {
                         ))}
                     </ol>
 
-                    <div className="mt-8 flex flex-wrap gap-4">
-                        <button className="btn btn-primary rounded-md px-5 text-xs font-bold border-none">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-4 w-4"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1.8"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M6 3.5h12a1 1 0 0 1 1 1V20l-7-3.5L5 20V4.5a1 1 0 0 1 1-1z"
-                                />
-                                <path strokeLinecap="round" d="M12 7v5M9.5 9.5h5" />
-                            </svg>
-                            Add to today&apos;s plan
-                        </button>
-
-                        <button className="btn btn-outline rounded-md border-white/10 px-5 text-xs font-bold">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-4 w-4"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1.8"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M6 3.5h12a1 1 0 0 1 1 1V20l-7-3.5L5 20V4.5a1 1 0 0 1 1-1z"
-                                />
-                            </svg>
-                            Save for later
-                        </button>
-                    </div>
+                    <WorkoutActions workoutId={workout.id} />
                 </div>
             </div>
         </div>

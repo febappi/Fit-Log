@@ -24,16 +24,20 @@ export const metadata: Metadata = {
     description: "Fitness Logging App",
 };
 
+import { PlanProvider } from "@/lib/PlanContext";
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
     return (
         <html
             data-theme="fitlog"
             lang="en"
-            className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} h-full antialiased`}
+            className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} h-full overflow-y-scroll antialiased`}
         >
             <body className="min-h-full flex flex-col">
-                <Navbar />
-                {children}
+                <PlanProvider>
+                    <Navbar />
+                    {children}
+                </PlanProvider>
             </body>
         </html>
     );
