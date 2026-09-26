@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { TWorkout } from "@/types/workout.type";
 import { usePlanContext } from "@/lib/PlanContext";
+import { toast } from "react-toastify";
 
 interface PlanCardProps {
     workout: TWorkout;
@@ -94,7 +95,14 @@ const PlanCard = ({ workout, onRemove, showMarkAsDone = true }: PlanCardProps) =
 
                 {showMarkAsDone && (
                     <button
-                        onClick={() => { if (!isDone) toggleDone(workout.id); }}
+                        onClick={() => {
+                            if (!isDone) {
+                                toggleDone(workout.id);
+                                toast.success("Workout marked as done!");
+                            } else {
+                                toast.error("Remove and add again");
+                            }
+                        }}
                         className={`btn btn-sm rounded-full px-4 text-xs font-bold border-none ${isDone ? 'bg-base-200 text-gray-500 cursor-not-allowed' : 'btn-primary'}`}
                     >
                         <svg
@@ -112,7 +120,10 @@ const PlanCard = ({ workout, onRemove, showMarkAsDone = true }: PlanCardProps) =
                 )}
 
                 <button
-                    onClick={() => onRemove(workout.id)}
+                    onClick={() => {
+                        onRemove(workout.id);
+                        toast.info("Workout removed from plan.");
+                    }}
                     className="btn btn-ghost btn-sm rounded-full px-2 text-gray-400 hover:text-white"
                 >
                     <svg

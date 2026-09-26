@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
+import { PlanProvider } from "@/lib/PlanContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Footer from "@/components/shared/Footer";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -24,8 +28,6 @@ export const metadata: Metadata = {
     description: "Fitness Logging App",
 };
 
-import { PlanProvider } from "@/lib/PlanContext";
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
     return (
         <html
@@ -36,7 +38,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <body className="min-h-full flex flex-col">
                 <PlanProvider>
                     <Navbar />
-                    {children}
+                    <main className="flex-1">
+                        {children}
+                    </main>
+                    <Footer />
+                    <ToastContainer 
+                        position="bottom-right"
+                        autoClose={1500}
+                        theme="dark"
+                    />
                 </PlanProvider>
             </body>
         </html>

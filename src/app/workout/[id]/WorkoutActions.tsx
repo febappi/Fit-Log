@@ -1,6 +1,7 @@
 "use client";
 
 import { usePlanContext } from "@/lib/PlanContext";
+import { toast } from "react-toastify";
 
 interface WorkoutActionsProps {
     workoutId: number;
@@ -15,7 +16,14 @@ export default function WorkoutActions({ workoutId }: WorkoutActionsProps) {
     return (
         <div className="mt-8 flex flex-wrap gap-4">
             <button
-                onClick={() => { if (!isToday) addToToday(workoutId); }}
+                onClick={() => {
+                    if (!isToday) {
+                        addToToday(workoutId);
+                        toast.success("Added to today's plan");
+                    } else {
+                        toast.error("Already added to today's plan");
+                    }
+                }}
                 className={`btn rounded-md px-5 text-xs font-bold border-none ${
                     isToday ? "bg-base-200 text-gray-500 cursor-not-allowed" : "btn-primary"
                 }`}
@@ -38,7 +46,14 @@ export default function WorkoutActions({ workoutId }: WorkoutActionsProps) {
             </button>
 
             <button
-                onClick={() => { if (!isSaved) addToSaved(workoutId); }}
+                onClick={() => {
+                    if (!isSaved) {
+                        addToSaved(workoutId);
+                        toast.success("Saved for later");
+                    } else {
+                        toast.error("Already saved for later");
+                    }
+                }}
                 className={`btn rounded-md px-5 text-xs font-bold border-white/5 ${
                     isSaved ? "bg-base-200 text-gray-500 cursor-not-allowed" : "btn-outline"
                 }`}
