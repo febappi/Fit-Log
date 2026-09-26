@@ -15,8 +15,7 @@ export default function WorkoutActions({ workoutId }: WorkoutActionsProps) {
     return (
         <div className="mt-8 flex flex-wrap gap-4">
             <button
-                onClick={() => addToToday(workoutId)}
-                disabled={isToday}
+                onClick={() => { if (!isToday) addToToday(workoutId); }}
                 className={`btn rounded-md px-5 text-xs font-bold border-none ${
                     isToday ? "bg-base-200 text-gray-500 cursor-not-allowed" : "btn-primary"
                 }`}
@@ -39,8 +38,7 @@ export default function WorkoutActions({ workoutId }: WorkoutActionsProps) {
             </button>
 
             <button
-                onClick={() => addToSaved(workoutId)}
-                disabled={isSaved}
+                onClick={() => { if (!isSaved) addToSaved(workoutId); }}
                 className={`btn rounded-md px-5 text-xs font-bold border-white/5 ${
                     isSaved ? "bg-base-200 text-gray-500 cursor-not-allowed" : "btn-outline"
                 }`}

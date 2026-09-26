@@ -1,11 +1,16 @@
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
 import logo from "@/assets/logo.png";
 import React from 'react';
+import { usePlanContext } from "@/lib/PlanContext";
 
 const Navbar = () => {
+    const { todayPlanIds, savedPlanIds } = usePlanContext();
+
     return (
-        <div className="px-10 border-b-2 border-white/10 mb-4">
+        <div className="sticky top-0 z-50 bg-base-100 px-10 border-b-2 border-white/10 mb-4">
             <div className="navbar bg-base-100 shadow-sm">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -41,13 +46,13 @@ const Navbar = () => {
                     <Link href="/my-plan" className="flex items-center gap-2 text-xs text-gray-300">
                         Plan
                         <span className="flex h-4 w-4 items-center justify-center rounded-full bg-lime-400 text-[10px] font-bold text-black">
-                            0
+                            {todayPlanIds.length}
                         </span>
                     </Link>
                     <Link href="/my-plan" className="flex items-center gap-2 text-xs text-gray-300">
-                        Plan
+                        Saved
                         <span className="flex h-4 w-4 items-center justify-center rounded-full border border-white/10 text-[10px] text-gray-400">
-                            0
+                            {savedPlanIds.length}
                         </span>
                     </Link>
                 </div>
