@@ -4,12 +4,14 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 type PlanContextType = {
     todayPlanIds: number[];
     savedPlanIds: number[];
+    donePlanIds: number[];
     activeTab: "today" | "saved";
     setActiveTab: (tab: "today" | "saved") => void;
     addToToday: (id: number) => void;
     removeFromToday: (id: number) => void;
     addToSaved: (id: number) => void;
     removeFromSaved: (id: number) => void;
+    toggleDone: (id: number) => void;
 };
 
 const PlanContext = createContext<PlanContextType | undefined>(undefined);
@@ -17,13 +19,16 @@ const PlanContext = createContext<PlanContextType | undefined>(undefined);
 export function PlanProvider({ children }: { children: ReactNode }) {
     const [todayPlanIds, setTodayPlanIds] = useState<number[]>([]);
     const [savedPlanIds, setSavedPlanIds] = useState<number[]>([]);
+    const [donePlanIds, setDonePlanIds] = useState<number[]>([]);
     const [activeTab, setActiveTab] = useState<"today" | "saved">("today");
 
     useEffect(() => {
         const storedToday = localStorage.getItem("todayPlanIds");
         const storedSaved = localStorage.getItem("savedPlanIds");
+        const storedDone = localStorage.getItem("donePlanIds");
         if (storedToday) setTodayPlanIds(JSON.parse(storedToday));
         if (storedSaved) setSavedPlanIds(JSON.parse(storedSaved));
+        if (storedDone) setDonePlanIds(JSON.parse(storedDone));
     }, []);
 
     const addToToday = (id: number) => {
@@ -39,6 +44,11 @@ export function PlanProvider({ children }: { children: ReactNode }) {
         setTodayPlanIds(prev => {
             const updated = prev.filter(p => p !== id);
             localStorage.setItem("todayPlanIds", JSON.stringify(updated));
+            return updated;
+        });
+        setDonePlanIds(prev => {
+            const updated = prev.filter(p => p !== id);
+            localStorage.setItem("donePlanIds", JSON.stringify(updated));
             return updated;
         });
     };
@@ -58,10 +68,23 @@ export function PlanProvider({ children }: { children: ReactNode }) {
             localStorage.setItem("savedPlanIds", JSON.stringify(updated));
             return updated;
         });
+        setDonePlanIds(prev => {
+            const updated = prev.filter(p => p !== id);
+            localStorage.setItem("donePlanIds", JSON.stringify(updated));
+            return updated;
+        });
+    };
+
+    const toggleDone = (id: number) => {
+        setDonePlanIds(prev => {
+            const updated = prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id];
+            localStorage.setItem("donePlanIds", JSON.stringify(updated));
+            return updated;
+        });
     };
 
     return (
-        <PlanContext.Provider value={{ todayPlanIds, savedPlanIds, activeTab, setActiveTab, addToToday, removeFromToday, addToSaved, removeFromSaved }}>
+        <PlanContext.Provider value={{ todayPlanIds, savedPlanIds, donePlanIds, activeTab, setActiveTab, addToToday, removeFromToday, addToSaved, removeFromSaved, toggleDone }}>
             {children}
         </PlanContext.Provider>
     );

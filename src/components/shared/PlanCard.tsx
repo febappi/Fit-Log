@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { TWorkout } from "@/types/workout.type";
+import { usePlanContext } from "@/lib/PlanContext";
 
 interface PlanCardProps {
     workout: TWorkout;
@@ -9,8 +10,11 @@ interface PlanCardProps {
 }
 
 const PlanCard = ({ workout, onRemove, showMarkAsDone = true }: PlanCardProps) => {
+    const { donePlanIds, toggleDone } = usePlanContext();
+    const isDone = donePlanIds.includes(workout.id);
+
     return (
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 rounded-xl border border-white/10 bg-base-300 p-4 sm:p-3">
+        <div className={`flex flex-col sm:flex-row items-stretch sm:items-center gap-4 rounded-xl border border-white/10 bg-base-300 p-4 sm:p-3 transition-opacity`}>
             <div className="relative h-40 w-full sm:h-20 sm:w-36 shrink-0 overflow-hidden rounded-lg">
                 <Image
                     src={workout.image}
@@ -89,7 +93,10 @@ const PlanCard = ({ workout, onRemove, showMarkAsDone = true }: PlanCardProps) =
                 </Link>
 
                 {showMarkAsDone && (
-                    <button className="btn btn-primary btn-sm rounded-full px-4 text-xs font-bold border-none">
+                    <button
+                        onClick={() => { if (!isDone) toggleDone(workout.id); }}
+                        className={`btn btn-sm rounded-full px-4 text-xs font-bold border-none ${isDone ? 'bg-base-200 text-gray-500 cursor-not-allowed' : 'btn-primary'}`}
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-4 w-4"
@@ -100,7 +107,7 @@ const PlanCard = ({ workout, onRemove, showMarkAsDone = true }: PlanCardProps) =
                         >
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
-                        Mark as Done
+                        {isDone ? 'Done' : 'Mark as Done'}
                     </button>
                 )}
 
