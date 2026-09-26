@@ -3,12 +3,34 @@
 import Link from 'next/link';
 import { usePlanContext } from "@/lib/PlanContext";
 
+import { usePathname } from 'next/navigation';
+
 export function NavLinks() {
     const { setActiveTab } = usePlanContext();
+    const pathname = usePathname();
+
+    const isWorkoutActive = pathname === "/" || pathname.startsWith("/workout");
+    const isPlanActive = pathname.startsWith("/my-plan");
+
     return (
         <>
-            <li><Link href="/workout#library">Workout</Link></li>
-            <li><Link href="/my-plan" onClick={() => setActiveTab("today")}>My Plan</Link></li>
+            <li>
+                <Link
+                    href="/"
+                    className={`rounded-full px-4 py-2 ${isWorkoutActive ? '!bg-[#192411] !text-primary font-medium' : 'text-gray-400'}`}
+                >
+                    Workouts
+                </Link>
+            </li>
+            <li>
+                <Link
+                    href="/my-plan"
+                    onClick={() => setActiveTab("today")}
+                    className={`rounded-full px-4 py-2 ${isPlanActive ? '!bg-[#192411] !text-primary font-medium' : 'text-gray-400'}`}
+                >
+                    My Plan
+                </Link>
+            </li>
         </>
     );
 }
