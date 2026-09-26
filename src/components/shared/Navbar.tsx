@@ -1,14 +1,10 @@
-"use client";
-
 import Link from 'next/link';
 import Image from 'next/image';
 import logo from "@/assets/logo.png";
 import React from 'react';
-import { usePlanContext } from "@/lib/PlanContext";
+import { NavLinks, NavStats } from './NavbarClient';
 
 const Navbar = () => {
-    const { todayPlanIds, savedPlanIds } = usePlanContext();
-
     return (
         <div className="sticky top-0 z-50 bg-base-100 px-10 border-b-2 border-white/10 mb-4">
             <div className="navbar bg-base-100 shadow-sm">
@@ -20,8 +16,7 @@ const Navbar = () => {
                         <ul
                             tabIndex={-1}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                            <li><Link href="/workout">Workout</Link></li>
-                            <li><Link href="/my-plan">My Plan</Link></li>
+                            <NavLinks />
                         </ul>
                     </div>
                     <Link href="/" className="flex items-center gap-2">
@@ -38,24 +33,10 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
-                        <li><Link href="/workout">Workout</Link></li>
-                        <li><Link href="/my-plan">My Plan</Link></li>
+                        <NavLinks />
                     </ul>
                 </div>
-                <div className="navbar-end gap-5">
-                    <Link href="/my-plan" className="flex items-center gap-2 text-xs text-gray-300">
-                        Plan
-                        <span className="flex h-4 w-4 items-center justify-center rounded-full bg-lime-400 text-[10px] font-bold text-black">
-                            {todayPlanIds.length}
-                        </span>
-                    </Link>
-                    <Link href="/my-plan" className="flex items-center gap-2 text-xs text-gray-300">
-                        Saved
-                        <span className="flex h-4 w-4 items-center justify-center rounded-full border border-white/10 text-[10px] text-gray-400">
-                            {savedPlanIds.length}
-                        </span>
-                    </Link>
-                </div>
+                <NavStats />
             </div>
         </div>
     );

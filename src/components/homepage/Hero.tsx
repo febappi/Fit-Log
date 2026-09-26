@@ -31,9 +31,11 @@ const Hero = () => {
                             into today's plan, and watch the week's work add up.
                         </span>
                     </p>
+                    <a href="#library">
                     <button className="btn btn-primary mt-6 rounded-md px-5 text-xs font-bold border-none">
                         BROWSE WORKOUTS
                     </button>
+                    </a>
                 </div>
             </div>
         </div>

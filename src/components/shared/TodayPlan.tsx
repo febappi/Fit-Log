@@ -20,7 +20,7 @@ const TodayPlan = ({ plan, onRemove }: TodayPlanProps) => {
                 </p>
 
                 <Link
-                    href="/"
+                    href="/workout#library"
                     className="btn btn-primary mt-5 rounded-md px-5 text-xs font-bold border-none"
                 >
                     Go to workouts

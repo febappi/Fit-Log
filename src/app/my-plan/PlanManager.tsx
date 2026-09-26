@@ -11,11 +11,21 @@ interface PlanManagerProps {
 }
 
 export default function PlanManager({ allWorkouts }: PlanManagerProps) {
-    const [activeTab, setActiveTab] = useState<"today" | "saved">("today");
-    const { todayPlanIds, savedPlanIds, removeFromToday, removeFromSaved } = usePlanContext();
+    const { todayPlanIds, savedPlanIds, activeTab, setActiveTab, removeFromToday, removeFromSaved } = usePlanContext();
 
-    const todayPlan = allWorkouts.filter(w => todayPlanIds.includes(w.id));
-    const savedPlan = allWorkouts.filter(w => savedPlanIds.includes(w.id));
+    const [sortBy, setSortBy] = useState<"Duration" | "Calories" | "Rating">("Duration");
+
+    const sortWorkouts = (list: TWorkout[]) => {
+        return [...list].sort((a, b) => {
+            if (sortBy === "Duration") return b.duration - a.duration;
+            if (sortBy === "Calories") return b.caloriesBurned - a.caloriesBurned;
+            if (sortBy === "Rating") return b.rating - a.rating;
+            return 0;
+        });
+    };
+
+    const todayPlan = sortWorkouts(allWorkouts.filter(w => todayPlanIds.includes(w.id)));
+    const savedPlan = sortWorkouts(allWorkouts.filter(w => savedPlanIds.includes(w.id)));
 
     const currentList = activeTab === "today" ? todayPlan : savedPlan;
 
@@ -75,19 +85,26 @@ export default function PlanManager({ allWorkouts }: PlanManagerProps) {
 
                 <div className="flex items-center gap-3">
                     <span className="text-xs text-gray-400">Sort By</span>
-                    <button className="flex items-center gap-2 rounded-md border border-white/10 px-3 py-1.5 text-xs">
-                        Duration
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.8"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
-                        </svg>
-                    </button>
+                    <div className="dropdown dropdown-end">
+                        <div tabIndex={0} role="button" className="flex items-center gap-2 rounded-md border border-white/10 px-3 py-1.5 text-xs">
+                            {sortBy}
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-4 w-4"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.8"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+                            </svg>
+                        </div>
+                        <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32 text-xs">
+                            <li><button onClick={() => { setSortBy("Duration"); (document.activeElement as HTMLElement)?.blur(); }}>Duration</button></li>
+                            <li><button onClick={() => { setSortBy("Calories"); (document.activeElement as HTMLElement)?.blur(); }}>Calories</button></li>
+                            <li><button onClick={() => { setSortBy("Rating"); (document.activeElement as HTMLElement)?.blur(); }}>Rating</button></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 

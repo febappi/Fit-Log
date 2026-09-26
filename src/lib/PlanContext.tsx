@@ -4,6 +4,8 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 type PlanContextType = {
     todayPlanIds: number[];
     savedPlanIds: number[];
+    activeTab: "today" | "saved";
+    setActiveTab: (tab: "today" | "saved") => void;
     addToToday: (id: number) => void;
     removeFromToday: (id: number) => void;
     addToSaved: (id: number) => void;
@@ -15,6 +17,7 @@ const PlanContext = createContext<PlanContextType | undefined>(undefined);
 export function PlanProvider({ children }: { children: ReactNode }) {
     const [todayPlanIds, setTodayPlanIds] = useState<number[]>([]);
     const [savedPlanIds, setSavedPlanIds] = useState<number[]>([]);
+    const [activeTab, setActiveTab] = useState<"today" | "saved">("today");
 
     useEffect(() => {
         const storedToday = localStorage.getItem("todayPlanIds");
@@ -58,7 +61,7 @@ export function PlanProvider({ children }: { children: ReactNode }) {
     };
 
     return (
-        <PlanContext.Provider value={{ todayPlanIds, savedPlanIds, addToToday, removeFromToday, addToSaved, removeFromSaved }}>
+        <PlanContext.Provider value={{ todayPlanIds, savedPlanIds, activeTab, setActiveTab, addToToday, removeFromToday, addToSaved, removeFromSaved }}>
             {children}
         </PlanContext.Provider>
     );

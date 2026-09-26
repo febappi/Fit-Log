@@ -5,7 +5,7 @@ import WorkoutCard from "../shared/WorkoutCard";
 const TheLibrary = async () => {
     const data = await getData();
     return (
-        <div className="mt-15 mb-10">
+        <div id="library" className="mt-15 mb-10 scroll-mt-24">
             <div className="mb-10">
             <h1 className="font-display text-3xl font-bold lg:leading-[0.5] tracking-tight">
                 THE LIBRARY
