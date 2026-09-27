@@ -68,11 +68,6 @@ export function PlanProvider({ children }: { children: ReactNode }) {
             localStorage.setItem("savedPlanIds", JSON.stringify(updated));
             return updated;
         });
-        setDonePlanIds(prev => {
-            const updated = prev.filter(p => p !== id);
-            localStorage.setItem("donePlanIds", JSON.stringify(updated));
-            return updated;
-        });
     };
 
     const toggleDone = (id: number) => {

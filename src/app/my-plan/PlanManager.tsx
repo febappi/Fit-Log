@@ -24,7 +24,7 @@ export default function PlanManager({ allWorkouts }: PlanManagerProps) {
         });
     };
 
-    const todayPlan = sortWorkouts(allWorkouts.filter(w => todayPlanIds.includes(w.id)));
+    const todayPlan = allWorkouts?sortWorkouts(allWorkouts.filter(w => todayPlanIds.includes(w.id))):[];
     const savedPlan = sortWorkouts(allWorkouts.filter(w => savedPlanIds.includes(w.id)));
 
     const currentList = activeTab === "today" ? todayPlan : savedPlan;
