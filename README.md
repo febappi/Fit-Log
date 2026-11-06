@@ -42,6 +42,7 @@ A simple workout library where you can explore exercises, view workout details, 
 ```bash
 npm install
 npm run dev
+```
 <br>
 
 <div align="center">
